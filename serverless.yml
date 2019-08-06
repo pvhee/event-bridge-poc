@@ -1,0 +1,21 @@
+service: event-bridge-poc
+app: event-bridge-poc
+org: pvhee
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-west-1
+
+functions:
+  produce:
+    handler: handler.produce
+
+  consume:
+    handler: handler.consume
+    events:
+      - eventBridge:
+          eventBus: arn:aws:events:eu-west-1:718881522025:event-bus/sample-event-bus
+          pattern:
+            source:
+              - comicrelief.grants
